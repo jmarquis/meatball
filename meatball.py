@@ -1,7 +1,12 @@
 import os
+import argparse
 import markovify
 
 source = ''
+
+parser = argparse.ArgumentParser(description='Max length for sentence generator.')
+parser.add_argument('maxlen')
+args = parser.parse_args()
 
 for filename in os.scandir('./sources'):
     with open(filename) as contents:
@@ -10,4 +15,4 @@ for filename in os.scandir('./sources'):
 
 text_model = markovify.Text(source, state_size=2)
 
-print(text_model.make_short_sentence(280))
+print(text_model.make_short_sentence(int(args.maxlen)))
