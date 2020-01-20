@@ -19,14 +19,19 @@ get '/' do
     end
   end
 
-  begin
-    @text = MeatballEntity.generate 280
-  rescue
-    return erb :initial
+  while tries < 10
+    tries += 1
+    @text = ''
+
+    begin
+      @text = MeatballEntity.generate 280
+      return erb :index
+    rescue
+      next
+    end
+
   end
 
-  return erb :initial if @text.empty?
-
-  erb :index
+  erb :initial
 
 end
