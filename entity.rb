@@ -90,6 +90,7 @@ class MeatballEntity
   end
 
   def self.save key, text
+    Dir::mkdir('./sources') if !Dir::exist? './sources'
     File.write("./sources/#{key}.txt", text)
   end
 
