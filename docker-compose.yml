@@ -7,3 +7,10 @@ services:
       - .:/opt/meatball
     ports:
       - "3006:4567"
+
+  cron:
+    build:
+      context: .
+      dockerfile: Dockerfile-cron
+    volumes:
+      - .:/opt/meatball
