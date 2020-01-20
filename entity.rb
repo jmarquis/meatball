@@ -38,6 +38,7 @@ class MeatballEntity
       return true
     end
 
+    p 'Failed!'
     return false
   end
 
