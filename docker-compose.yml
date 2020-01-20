@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+  web:
+    build: .
+    volumes:
+      - .:/opt/meatball
+    ports:
+      - "3006:4567"
