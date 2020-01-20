@@ -29,9 +29,13 @@ end
 
 get '/learn' do
 
+  @term = params[:term]
   if !Dir::exist? './sources'
-    erb :initial
-    return
+    if @term.nil? || @term.empty?
+      return erb :initial
+    end
+
+    Dir::mkdir './sources'
   end
 
   key = 'aaf10f9661404d7a88e6ae5af6acdea7'
@@ -44,13 +48,25 @@ get '/learn' do
     'quizlet.com'
   ]
 
+  tries = 0
+
   while true
 
-    # get a search string
-    @term = `python3 meatball.py 60`
-    @term.strip!
+    tries += 1
+    if tries > 10
+      return erb :fail
+    end
 
-    next if @term == 'None'
+    @term = params[:term] || ''
+
+    # get a search string
+    if @term.nil? || @term.empty?
+      @term = `python3 meatball.py 60`
+      @term.strip!
+
+      next if @term == 'None'
+      return erb :initial if @term == ''
+    end
 
     p "Searching for '#{@term}' ..."
 
@@ -85,11 +101,18 @@ get '/learn' do
       next
     end
 
+    begin
+      # fetch and parse
+      p "Fetching #{@result_url} ..."
+      doc = Nokogiri::HTML(OpenURI.open_uri(@result_url))
+    rescue e
+      p e.message
+      next
+    end
+
     break
 
   end
-
-  doc = Nokogiri::HTML(OpenURI.open_uri(@result_url))
 
   text = ''
   doc.css('body').css('p, h1, h2, h3, h4, h5, h6').each do |txt|
@@ -101,6 +124,10 @@ get '/learn' do
 
   # write it to the sources
   File.write("./sources/#{result_key}.txt", text)
+
+  if params[:term]
+    return redirect '/learn'
+  end
 
   erb :learn
 
