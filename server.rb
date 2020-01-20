@@ -19,7 +19,11 @@ get '/' do
     end
   end
 
-  @text = MeatballEntity.generate 280
+  begin
+    @text = MeatballEntity.generate 280
+  rescue
+    return erb :initial
+  end
 
   return erb :initial if @text.empty?
 
