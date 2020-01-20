@@ -11,6 +11,7 @@ set :bind, '0.0.0.0'
 get '/' do
   @text = `python3 meatball.py 280`.strip
   p @text
+  return redirect '/learn' if @text.empty?
   erb :index
 end
 
