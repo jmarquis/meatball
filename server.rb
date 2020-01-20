@@ -19,6 +19,7 @@ get '/' do
     end
   end
 
+  tries = 0
   while tries < 10
     tries += 1
     @text = ''
