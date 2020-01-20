@@ -6,3 +6,5 @@ gem 'sinatra-contrib'
 gem 'nokogiri'
 
 gem 'pry'
+
+gem 'twitter'

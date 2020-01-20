@@ -20,5 +20,6 @@ RUN bundle install
 VOLUME /opt/meatball
 
 RUN echo '* * * * * cd /opt/meatball && ruby autolearn.rb' >> /etc/crontabs/root
+RUN echo '0 * * * * cd /opr/meatball && ruby tweet.rb' >> /etc/crontabs/root
 
 CMD ["/usr/sbin/crond", "-f", "-d", "0"]
