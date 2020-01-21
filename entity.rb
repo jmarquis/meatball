@@ -4,6 +4,9 @@ require 'json'
 require 'uri'
 require 'net/https'
 
+class BingError < StandardError
+end
+
 class MeatballEntity
 
   BING_KEY = 'aaf10f9661404d7a88e6ae5af6acdea7'
@@ -36,6 +39,9 @@ class MeatballEntity
         doc = fetch result_url
         text = scrape doc
         save result_key, text
+      rescue BingError => e
+        p "Error talking to Bing: #{e}"
+        break
       rescue => e
         p "Oh no! #{e.message}"
         next
@@ -45,7 +51,7 @@ class MeatballEntity
       return true
     end
 
-    p 'Failed!'
+    p 'Learn failed!'
     return false
   end
 
@@ -66,6 +72,10 @@ class MeatballEntity
     response = Net::HTTP.start(request_url.host, request_url.port, use_ssl: request_url.scheme == 'https') do |http|
       http.request(request)
     end
+
+    parsed_response = JSON(response.body)
+
+    raise BingError, parsed_response['error']['message'] if parsed_response['error']
 
     JSON(response.body)['webPages']['value']
   end
