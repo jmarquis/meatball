@@ -11,6 +11,18 @@ set :bind, '0.0.0.0'
 
 get '/' do
 
+  if !params[:url].nil?
+    begin
+      result_key = params[:url].gsub(/[^0-9A-Za-z]/, '')
+      doc = MeatballEntity.fetch params[:url]
+      text = MeatballEntity.scrape doc
+      MeatballEntity.save result_key, text
+      return redirect '/'
+    rescue
+      return erb :fail
+    end
+  end
+
   if !params[:term].nil?
     if MeatballEntity.learn params[:term]
       return redirect '/'
