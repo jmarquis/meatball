@@ -12,3 +12,5 @@ tweet = MeatballEntity.generate 280
 p "TWEETING: #{tweet}"
 
 client.update tweet
+
+p 'Tweet successful!'

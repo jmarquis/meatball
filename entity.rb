@@ -34,7 +34,7 @@ class MeatballEntity
         next
       end
 
-      p 'Success!'
+      p 'Learn successful!'
       return true
     end
 
