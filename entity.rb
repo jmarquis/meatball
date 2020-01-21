@@ -16,6 +16,13 @@ class MeatballEntity
     'quizlet.com'
   ]
 
+  SENTENCE_BLACKLIST = [
+    'masturbat',
+    'fuck',
+    'cunt',
+    'panties',
+  ]
+
   # Returns true if successful, false if not
   def self.learn term = nil
     tries = 0
@@ -44,7 +51,7 @@ class MeatballEntity
 
   def self.generate len
     output = `python3 meatball.py #{len}`.strip
-    raise 'Failed to generate a decent string.' if output.empty? || output == 'None'
+    raise 'Failed to generate a decent string.' if output.empty? || output == 'None' || SENTENCE_BLACKLIST.any? { |pattern| output.include?(pattern) }
     p "GENERATED: #{output}"
     output
   end
