@@ -9,7 +9,6 @@ end
 
 class MeatballEntity
 
-  BING_KEY = 'aaf10f9661404d7a88e6ae5af6acdea7'
   BING_URI = 'https://api.cognitive.microsoft.com'
   BING_PATH = '/bing/v7.0/search'
 
@@ -67,7 +66,7 @@ class MeatballEntity
 
     request_url = URI(BING_URI + BING_PATH + "?q=" + URI.encode_www_form_component(term))
     request = Net::HTTP::Get.new(request_url)
-    request['Ocp-Apim-Subscription-Key'] = BING_KEY
+    request['Ocp-Apim-Subscription-Key'] = ENV['BING_KEY']
 
     response = Net::HTTP.start(request_url.host, request_url.port, use_ssl: request_url.scheme == 'https') do |http|
       http.request(request)
