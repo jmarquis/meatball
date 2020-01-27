@@ -17,6 +17,4 @@ if rand.round(3) == 1
 
   p 'Tweet successful!'
 
-else
-  p 'No tweet this time around.'
 end
