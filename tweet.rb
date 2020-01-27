@@ -1,7 +1,7 @@
 require 'twitter'
 require_relative 'entity'
 
-if rand.round(2) == 1
+if rand.round(3) == 1
 
   client = Twitter::REST::Client.new do |config|
     config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
