@@ -1,14 +1,14 @@
 version: '3'
 services:
 
-  web:
-    build: .
-    volumes:
-      - .:/opt/meatball
-    ports:
-      - "3006:4567"
-    env_file:
-      - .env
+  #web:
+    #build: .
+    #volumes:
+      #- .:/opt/meatball
+    #ports:
+      #- "3006:4567"
+    #env_file:
+      #- .env
 
   cron:
     build:
@@ -18,3 +18,4 @@ services:
       - .:/opt/meatball
     env_file:
       - .env
+    restart: unless-stopped
