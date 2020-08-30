@@ -3,6 +3,7 @@ FROM ruby:2.7-alpine
 RUN apk add --update \
   less \
   python3 \
+  py3-pip \
   build-base \
   libxml2-dev \
   libxslt-dev \
