@@ -7,4 +7,4 @@ gem 'nokogiri'
 
 gem 'pry'
 
-gem 'twitter'
+gem 'tweetkit'
