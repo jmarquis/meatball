@@ -15,6 +15,7 @@ for filename in os.scandir('./sources'):
             text = contents.read()
             source = source + "\n" + text
         except:
+            pass
 
 state_size = random.randint(1, 3)
 text_model = markovify.Text(source, state_size=state_size)
