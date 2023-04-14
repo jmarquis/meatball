@@ -11,8 +11,10 @@ args = parser.parse_args()
 
 for filename in os.scandir('./sources'):
     with open(filename) as contents:
-        text = contents.read()
-        source = source + "\n" + text
+        try:
+            text = contents.read()
+            source = source + "\n" + text
+        except:
 
 state_size = random.randint(1, 3)
 text_model = markovify.Text(source, state_size=state_size)
