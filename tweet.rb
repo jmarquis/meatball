@@ -1,4 +1,4 @@
-exit unless rand.round(3) == 1
+exit unless rand.round(3) > 0.995
 
 require 'tweetkit'
 require_relative 'entity'
