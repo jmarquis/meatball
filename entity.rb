@@ -38,6 +38,7 @@ class MeatballEntity
         doc = fetch result_url
         text = scrape doc
         save result_key, text
+        cleanup
       rescue BingError => e
         p "Error talking to Bing: #{e}"
         break
@@ -108,6 +109,13 @@ class MeatballEntity
   def self.save key, text
     Dir::mkdir('./sources') if !Dir::exist? './sources'
     File.write("./sources/#{key}.txt", text)
+  end
+
+  def self.cleanup
+    Dir.glob('sources/*.txt') do |file|
+      age_in_days = (Time.now - File.ctime(file)) / (24*3600)
+      File.delete(file) if age_in_days > 365
+    end
   end
 
 end
